@@ -1,5 +1,6 @@
 package com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroUsuario;
 
+import com.zup.william.desafiomercadolivre.desafiomercadolivre.compartilhado.DeveSerUnico;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -14,7 +15,7 @@ public class UsuarioForm {
     private String nome;
 
     @NotBlank
-    @Email
+    @Email @DeveSerUnico(value = "login", classe = Usuario.class)
     private String login;
 
     @NotBlank

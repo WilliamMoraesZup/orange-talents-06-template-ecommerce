@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Locale;
+
 @RestControllerAdvice
 public class ControllerExceptionHandler {
 
@@ -17,12 +19,23 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public  ErrorMessage resourceNotFoundException(MethodArgumentNotValidException request) {
+    public ErrorMessage resourceNotFoundException(MethodArgumentNotValidException request) {
 
         String field = request.getFieldError().getField();
         String rejectedValue = request.getFieldError().getRejectedValue().toString();
         String message = request.getFieldError().getDefaultMessage();
-         ErrorMessage dtoErro = new ErrorMessage(field, rejectedValue, message);
+        ErrorMessage dtoErro = new ErrorMessage(field, rejectedValue, message);
+
+
+        return dtoErro;
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorMessage resourceNotFoundException(IllegalArgumentException request) {
+
+        String message = request.getMessage();
+        ErrorMessage dtoErro = new ErrorMessage(null, null, message);
 
 
         return dtoErro;
