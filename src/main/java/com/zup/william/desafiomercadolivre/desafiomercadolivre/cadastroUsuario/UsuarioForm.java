@@ -1,4 +1,4 @@
-package com.william.mercadolivre.mercadolivre.cadastroUsuario;
+package com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroUsuario;
 
 import org.hibernate.validator.constraints.Length;
 
