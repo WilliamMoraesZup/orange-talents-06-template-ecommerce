@@ -35,6 +35,14 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
     public Usuario() {
     }
 }

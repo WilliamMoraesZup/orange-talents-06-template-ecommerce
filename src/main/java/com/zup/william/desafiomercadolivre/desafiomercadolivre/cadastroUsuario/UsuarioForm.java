@@ -2,12 +2,11 @@ package com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroUsuario;
 
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.compartilhado.DeveSerUnico;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.util.Assert;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class UsuarioForm {
 
@@ -15,7 +14,8 @@ public class UsuarioForm {
     private String nome;
 
     @NotBlank
-    @Email @DeveSerUnico(value = "login", classe = Usuario.class)
+    @Email
+    @DeveSerUnico(value = "login", classe = Usuario.class)
     private String login;
 
     @NotBlank
@@ -28,13 +28,24 @@ public class UsuarioForm {
         this.senha = senha;
     }
 
-    public Usuario toModel() throws UnsupportedEncodingException, NoSuchAlgorithmException {
-   return new Usuario(nome, login, senha = criptografa(senha));
+    public Usuario toModel() {
+        Assert.hasLength(senha, "senha não pode ser em branco");
+        Assert.isTrue(senha.length() >= 6, "Senha tem que ser no minimo 6 caracteres");
+
+        return new Usuario(nome, login, senha = criptografa(senha));
     }
 
 
-    private String criptografa(String senha) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
+    private String criptografa(String senha) {
+
+        return new BCryptPasswordEncoder().encode(senha);
+    }
+
+}
+
+
+/* senha antiga
+  MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
         byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
 
         StringBuilder hexString = new StringBuilder();
@@ -43,6 +54,4 @@ public class UsuarioForm {
         }
         String senhahex = hexString.toString();
         return senhahex;
-    }
-
-}
+ */

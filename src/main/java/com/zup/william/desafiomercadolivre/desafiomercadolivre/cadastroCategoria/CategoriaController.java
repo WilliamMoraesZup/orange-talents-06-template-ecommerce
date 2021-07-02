@@ -1,6 +1,8 @@
 package com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroCategoria;
 
+import com.zup.william.desafiomercadolivre.desafiomercadolivre.seguranca.UsuarioLogado;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -22,8 +23,12 @@ public class CategoriaController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<?> novaCategoria(@RequestBody @Valid CategoriaForm categoriaForm) {
+    public ResponseEntity<?> novaCategoria(@RequestBody @Valid CategoriaForm categoriaForm,
+                                           @AuthenticationPrincipal UsuarioLogado usuarioLogado) {
         Categoria categoria = categoriaForm.toModel(manager);
+
+
+
 
         manager.persist(categoria);
 
