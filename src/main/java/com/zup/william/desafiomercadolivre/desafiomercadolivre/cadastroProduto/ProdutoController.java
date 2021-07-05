@@ -27,7 +27,7 @@ public class ProdutoController
     @Transactional
     public ResponseEntity<?> novoProduto(@RequestBody @Valid ProdutoForm form,  @AuthenticationPrincipal UsuarioLogado usuario) {
       Produto entidade = form.toModel(manager,usuario );
-        System.out.println(form.getCaracteristicas());  manager.persist(entidade);
+      manager.persist(entidade);
 
 
 

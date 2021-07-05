@@ -67,4 +67,5 @@ public class UsuarioLogado implements UserDetails {
         return usuario;
     }
 
+
 }
