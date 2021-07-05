@@ -1,4 +1,5 @@
-package com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroCategoria;
+package com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroProduto;
+
 
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.seguranca.UsuarioLogado;
 import org.springframework.http.ResponseEntity;
@@ -13,27 +14,27 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-
 @RestController
-@RequestMapping("/categoria")
-public class CategoriaController {
+@RequestMapping("/produto")
+public class ProdutoController
+{
 
     @PersistenceContext
     private EntityManager manager;
 
+
     @PostMapping
     @Transactional
-    public ResponseEntity<?> novaCategoria(@RequestBody @Valid CategoriaForm categoriaForm
-    ) {
-
-        Categoria categoria = categoriaForm.toModel(manager);
-
-        manager.persist(categoria);
-
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> novoProduto(@RequestBody @Valid ProdutoForm form,  @AuthenticationPrincipal UsuarioLogado usuario) {
+      Produto entidade = form.toModel(manager,usuario );
+        System.out.println(form.getCaracteristicas());  manager.persist(entidade);
 
 
+
+        return ResponseEntity.ok( ).build();
     }
+
+
 
 
 }

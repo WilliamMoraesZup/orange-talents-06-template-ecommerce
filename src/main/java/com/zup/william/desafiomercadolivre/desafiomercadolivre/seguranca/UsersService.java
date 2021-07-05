@@ -25,6 +25,7 @@ public class UsersService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         query = "select u from Usuario u where u.login = :username";
 
+        System.out.println("loadUserByUsername");
         System.out.println(username);
         List<?> objects = manager.createQuery(query)
                 .setParameter("username", username).getResultList();

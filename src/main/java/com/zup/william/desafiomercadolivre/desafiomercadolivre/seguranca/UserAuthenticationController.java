@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/api/auth")
-public class UserAuthController {
+public class UserAuthenticationController {
+
     @Autowired
     private AuthenticationManager authManager;
 
@@ -25,14 +25,17 @@ public class UserAuthController {
     private TokenManager tokenManager;
 
     private static final Logger log = LoggerFactory
-            .getLogger(UserAuthController.class);
+            .getLogger(UserAuthenticationController.class);
 
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> authenticate(@RequestBody LoginInputDto loginInfo) {
+
+
+        System.out.println(loginInfo.getLogin()+ "  "+loginInfo.getSenha());
         UsernamePasswordAuthenticationToken authenticationToken = loginInfo.build();
-        System.out.println("RODEI");
+
         try {
             Authentication authentication = authManager.authenticate(authenticationToken);
             String jwt = tokenManager.generateToken(authentication);
@@ -40,7 +43,7 @@ public class UserAuthController {
             return ResponseEntity.ok(jwt);
 
         } catch (AuthenticationException e) {
-           log.error("[Autenticacao] {}",e);
+            log.error("[Autenticacao] {}", e);
             return ResponseEntity.badRequest().build();
         }
 
