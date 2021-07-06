@@ -13,14 +13,14 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/produtos")
+
 public class OpiniaoController {
 
     @PersistenceContext
     private EntityManager manager;
 
 
-    @PostMapping("/{idProduto}/opiniao")
+    @PostMapping("/produto/{idProduto}/opiniao")
     @Transactional
     public ResponseEntity<?> novaOpiniao(@RequestBody @Valid OpiniaoForm form, @PathVariable Long idProduto, @AuthenticationPrincipal UsuarioLogado usuarioLogado) {
         Opiniao opiniao = form.toModel(manager, idProduto, usuarioLogado.getIdUsuarioLogado(manager));

@@ -40,7 +40,6 @@ public class Produto {
     private String descricao;
 
     @NotNull
-
     private Instant instanteDeCadastro = Instant.now();
 
     @ManyToOne
@@ -59,8 +58,8 @@ public class Produto {
     @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
     private List<FotoProduto> imagens = new ArrayList<>();
 
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
-    private List<Opiniao> opinioes;
+//    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+//    private List<Opiniao> opinioes;
 
 
     public Produto(String nome, BigDecimal valor, int quantidade, String descricao, Categoria categoria, Usuario usuarioVendedor, Set<Caracteristica> caracteristicasList) {
