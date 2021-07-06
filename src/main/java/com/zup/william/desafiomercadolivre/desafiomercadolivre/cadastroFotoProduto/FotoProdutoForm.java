@@ -4,6 +4,7 @@ package com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroFotoProd
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroProduto.Produto;
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.seguranca.UsuarioLogado;
 import io.jsonwebtoken.lang.Assert;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -16,7 +17,7 @@ public class FotoProdutoForm {
     @NotBlank
     private String nome;
 
-    @NotBlank
+    @NotBlank @URL
     private String link;
 
     private Long idProduto;

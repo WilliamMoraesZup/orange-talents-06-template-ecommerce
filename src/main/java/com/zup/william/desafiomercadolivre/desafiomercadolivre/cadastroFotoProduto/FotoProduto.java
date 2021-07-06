@@ -2,6 +2,7 @@ package com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroFotoProd
 
 
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroProduto.Produto;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -19,7 +20,7 @@ public class FotoProduto {
     private String nome;
 
     @NotBlank
-    @NotNull
+    @NotNull @URL
     private String link;
 
     @NotNull
@@ -45,7 +46,7 @@ public class FotoProduto {
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", link='" + link + '\'' +
-                ", produto=" + produto +
+
                 '}';
     }
 }

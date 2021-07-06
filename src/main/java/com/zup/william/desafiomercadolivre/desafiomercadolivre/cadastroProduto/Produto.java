@@ -1,5 +1,6 @@
 package com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroProduto;
 
+import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastraOpiniao.Opiniao;
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroCategoria.Categoria;
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroFotoProduto.FotoProduto;
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroUsuario.Usuario;
@@ -39,6 +40,7 @@ public class Produto {
     private String descricao;
 
     @NotNull
+
     private Instant instanteDeCadastro = Instant.now();
 
     @ManyToOne
@@ -54,8 +56,11 @@ public class Produto {
     @Size(min = 3)
     private Set<Caracteristica> caracteristicasList = new HashSet<>();
 
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
     private List<FotoProduto> imagens = new ArrayList<>();
+
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    private List<Opiniao> opinioes;
 
 
     public Produto(String nome, BigDecimal valor, int quantidade, String descricao, Categoria categoria, Usuario usuarioVendedor, Set<Caracteristica> caracteristicasList) {
@@ -77,6 +82,22 @@ public class Produto {
 
     public void setImagens(List<FotoProduto> imagens) {
         System.out.println(imagens);
-   this.     imagens.addAll(imagens);
+        this.imagens.addAll(imagens);
+    }
+
+    @Override
+    public String toString() {
+        return "Produto{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", valor=" + valor +
+                ", quantidade=" + quantidade +
+                ", descricao='" + descricao + '\'' +
+                ", instanteDeCadastro=" + instanteDeCadastro +
+                ", categoria=" + categoria +
+                ", usuarioVendedor=" + usuarioVendedor +
+                ", caracteristicasList=" + caracteristicasList +
+                ", imagens=" + imagens +
+                '}';
     }
 }
