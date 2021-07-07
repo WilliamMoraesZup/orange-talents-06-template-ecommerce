@@ -28,6 +28,6 @@ public class OpiniaoController {
         manager.persist(opiniao);
 
 
-        return ResponseEntity.ok(opiniao) ;
+        return ResponseEntity.ok().build() ;
     }
 }

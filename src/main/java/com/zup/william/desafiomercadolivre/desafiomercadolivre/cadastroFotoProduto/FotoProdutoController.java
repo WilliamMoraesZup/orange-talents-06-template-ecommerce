@@ -33,13 +33,10 @@ public class FotoProdutoController {
         Assert.notNull(produto, "Produto não localizado");
 
         // VALIDA SE O USUARIO LOGADO É DONO DO PRODUTO INFORMADO
-
         if (!produto.getUsuarioVendedor().getLogin().equals(usuario.getUsername())) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("O produto informado não pertence ao usuário logado");
         }
-
-        List<FotoProduto> collect = form.stream().map(e -> e.toModel(manager, idProduto)).collect(Collectors.toList());
-        produto.setImagens(collect);
+        form.stream().map(e -> e.toModel(manager, idProduto)).collect(Collectors.toList()).forEach(manager::persist);
 
 
         return ResponseEntity.ok().build();

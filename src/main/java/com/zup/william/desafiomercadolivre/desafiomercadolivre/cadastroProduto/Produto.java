@@ -1,6 +1,5 @@
 package com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroProduto;
 
-import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastraOpiniao.Opiniao;
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroCategoria.Categoria;
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroFotoProduto.FotoProduto;
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroUsuario.Usuario;
@@ -50,9 +49,9 @@ public class Produto {
     @NotNull
     private Usuario usuarioVendedor;
 
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
-    @NotNull
+
     @Size(min = 3)
+    @OneToMany(cascade = CascadeType.PERSIST)
     private Set<Caracteristica> caracteristicasList = new HashSet<>();
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
@@ -69,7 +68,7 @@ public class Produto {
         this.descricao = descricao;
         this.categoria = categoria;
         this.usuarioVendedor = usuarioVendedor;
-        this.caracteristicasList = caracteristicasList;
+        this.caracteristicasList.addAll(caracteristicasList);
     }
 
     public Produto() {
@@ -79,9 +78,9 @@ public class Produto {
         return usuarioVendedor;
     }
 
-    public void setImagens(List<FotoProduto> imagens) {
-        System.out.println(imagens);
-        this.imagens.addAll(imagens);
+    public void setImagens(List<FotoProduto> imagensRecebidsa) {
+
+        this.imagens.addAll(imagensRecebidsa);
     }
 
     @Override
@@ -98,5 +97,29 @@ public class Produto {
                 ", caracteristicasList=" + caracteristicasList +
                 ", imagens=" + imagens +
                 '}';
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public Set<Caracteristica> getCaracteristicasList() {
+        return caracteristicasList;
+    }
+
+    public List<FotoProduto> getImagens() {
+        return imagens;
     }
 }

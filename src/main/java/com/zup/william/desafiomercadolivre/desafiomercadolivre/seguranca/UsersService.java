@@ -24,12 +24,8 @@ public class UsersService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         query = "select u from Usuario u where u.login = :username";
-
-        System.out.println("loadUserByUsername");
-        System.out.println(username);
-        List<?> objects = manager.createQuery(query)
+    List<?> objects = manager.createQuery(query)
                 .setParameter("username", username).getResultList();
-        System.out.println(objects);
 
         Assert.isTrue(objects.size() <= 1, "[BUG]");
 

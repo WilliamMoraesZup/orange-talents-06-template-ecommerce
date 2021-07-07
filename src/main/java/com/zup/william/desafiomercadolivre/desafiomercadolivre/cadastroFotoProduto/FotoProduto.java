@@ -49,4 +49,12 @@ public class FotoProduto {
 
                 '}';
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getLink() {
+        return link;
+    }
 }

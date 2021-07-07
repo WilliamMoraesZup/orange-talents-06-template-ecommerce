@@ -16,8 +16,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/produto")
-public class ProdutoController
-{
+public class ProdutoController {
 
     @PersistenceContext
     private EntityManager manager;
@@ -25,16 +24,14 @@ public class ProdutoController
 
     @PostMapping
     @Transactional
-    public ResponseEntity<?> novoProduto(@RequestBody @Valid ProdutoForm form,  @AuthenticationPrincipal UsuarioLogado usuario) {
-      Produto entidade = form.toModel(manager,usuario );
-      manager.persist(entidade);
+    public ResponseEntity<?> novoProduto(@RequestBody @Valid ProdutoForm form, @AuthenticationPrincipal UsuarioLogado usuario) {
+        Produto entidade = form.toModel(manager, usuario);
+
+        manager.persist(entidade);
 
 
-
-        return ResponseEntity.ok( ).build();
+        return ResponseEntity.ok().build();
     }
-
-
 
 
 }

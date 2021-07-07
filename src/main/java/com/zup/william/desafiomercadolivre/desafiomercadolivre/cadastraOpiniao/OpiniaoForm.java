@@ -35,7 +35,7 @@ public class OpiniaoForm {
         Usuario usuario = manager.find(Usuario.class, this.idUsuario);
         Assert.state(usuario != null, "Usuário não foi encontrado");
 
-        Assert.isTrue(!usuario.getLogin().equals(produto.getUsuarioVendedor().getLogin()), "O produto não pode pertencer ao próprio vendedor");
+      //  Assert.isTrue(!usuario.getLogin().equals(produto.getUsuarioVendedor().getLogin()), "O produto não pode pertencer ao próprio vendedor");
 
         OpiniaoENUM novaOpiniao = OpiniaoENUM.pegaOpiniaoPorValor(notaOpiniao);
 

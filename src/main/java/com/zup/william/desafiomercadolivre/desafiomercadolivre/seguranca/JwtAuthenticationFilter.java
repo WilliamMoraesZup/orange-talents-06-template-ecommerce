@@ -18,19 +18,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private UsersService usersService;
 
     public JwtAuthenticationFilter(TokenManager tokenManager, UsersService usersService) {
-
-        System.out.println("CONSTRU");
-        this.tokenManager = tokenManager;
+       this.tokenManager = tokenManager;
         this.usersService = usersService;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-        System.out.println("recuperando token manualmente");
 
         Optional<String> possibleToken = getTokenFromRequest(request);
-        System.out.println(possibleToken);
 
 
         if (possibleToken.isPresent() && tokenManager.isValid(possibleToken.get())) {
@@ -51,8 +47,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private Optional<String> getTokenFromRequest(HttpServletRequest request) {
         String authToken = request.getHeader("Authorization");
 
-        System.out.println("AUTHTOKEN");
-        System.out.println(authToken);
         return Optional.ofNullable(authToken);
     }
 

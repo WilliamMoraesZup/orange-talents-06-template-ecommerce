@@ -39,14 +39,11 @@ public class TokenManager {
     public boolean isValid(String jwt) {
         try {
 
-            System.out.println(jwt);
-            Jwts.parser().setSigningKey(this.secret).parseClaimsJws(jwt);
-            System.out.println("  VALIDOU");
-            return true;
+              Jwts.parser().setSigningKey(this.secret).parseClaimsJws(jwt);
+             return true;
 
         } catch (JwtException | IllegalArgumentException e) {
-            System.out.println("NAO VALIDOU");
-            return false;
+              return false;
         }
     }
 

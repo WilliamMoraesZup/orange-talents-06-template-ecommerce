@@ -33,6 +33,9 @@ public class Pergunta{
         return titulo;
     }
 
+    public Pergunta() {
+    }
+
     public Pergunta(String titulo, Usuario usuario, Produto produto) {
         this.titulo = titulo;
         this.usuario = usuario;

@@ -63,7 +63,7 @@ public class ProdutoForm {
         Assert.isTrue(resultList.size() == 1, "Usuario " + usuario.getUsername() + " não foi encontrado");
 
        Set<Caracteristica> caracteristicaList = caracteristicas.stream().map(CaracteristicaForm::toModel).collect(Collectors.toSet());
-        caracteristicaList.forEach(manager::persist);
+  //      caracteristicaList.forEach(manager::persist);
 
 
         return new Produto(nome, valor, quantidade, descricao, categoria, resultList.get(0), caracteristicaList);

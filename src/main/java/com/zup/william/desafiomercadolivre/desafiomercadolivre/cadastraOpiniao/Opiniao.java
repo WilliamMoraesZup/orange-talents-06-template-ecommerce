@@ -35,7 +35,30 @@ public class Opiniao {
         this.descricao = descricao;
         this.usuario = usuario;
         this.produto = produto;
+
+
+
     }
 
+    public Opiniao() {
+    }
 
+    @Override
+    public String toString() {
+        return "Opiniao{" +
+                "id=" + id +
+                ", opiniao=" + opiniao +
+                ", descricao='" + descricao + '\'' +
+                ", usuario=" + usuario +
+                ", produto=" + produto +
+                '}';
+    }
+
+    public OpiniaoENUM getOpiniao() {
+        return opiniao;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
 }
