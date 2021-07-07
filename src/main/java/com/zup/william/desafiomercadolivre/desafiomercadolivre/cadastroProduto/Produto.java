@@ -1,5 +1,7 @@
 package com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroProduto;
 
+import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastraOpiniao.Opiniao;
+import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastraPergunta.Pergunta;
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroCategoria.Categoria;
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroFotoProduto.FotoProduto;
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroUsuario.Usuario;
@@ -8,10 +10,9 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -55,10 +56,15 @@ public class Produto {
     private Set<Caracteristica> caracteristicasList = new HashSet<>();
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
-    private List<FotoProduto> imagens = new ArrayList<>();
+    private Set<FotoProduto> imagens = new HashSet<>();
 
-//    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
-//    private List<Opiniao> opinioes;
+    @OneToMany(mappedBy = "produto")
+    @OrderBy("titulo asc")
+    private SortedSet<Pergunta> perguntas = new TreeSet<>();
+
+
+    @OneToMany(mappedBy = "produto")
+    private List<Opiniao> opinioes = new ArrayList<>();
 
 
     public Produto(String nome, BigDecimal valor, int quantidade, String descricao, Categoria categoria, Usuario usuarioVendedor, Set<Caracteristica> caracteristicasList) {
@@ -71,32 +77,12 @@ public class Produto {
         this.caracteristicasList.addAll(caracteristicasList);
     }
 
+    @Deprecated
     public Produto() {
     }
 
     public Usuario getUsuarioVendedor() {
         return usuarioVendedor;
-    }
-
-    public void setImagens(List<FotoProduto> imagensRecebidsa) {
-
-        this.imagens.addAll(imagensRecebidsa);
-    }
-
-    @Override
-    public String toString() {
-        return "Produto{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", valor=" + valor +
-                ", quantidade=" + quantidade +
-                ", descricao='" + descricao + '\'' +
-                ", instanteDeCadastro=" + instanteDeCadastro +
-                ", categoria=" + categoria +
-                ", usuarioVendedor=" + usuarioVendedor +
-                ", caracteristicasList=" + caracteristicasList +
-                ", imagens=" + imagens +
-                '}';
     }
 
     public Long getId() {
@@ -115,11 +101,29 @@ public class Produto {
         return descricao;
     }
 
-    public Set<Caracteristica> getCaracteristicasList() {
-        return caracteristicasList;
+    public <T> Set<T> mapeiaCaracteristicas(Function<Caracteristica, T> funcaoMapeadora) {
+
+        return this.caracteristicasList.stream()
+                .map(funcaoMapeadora)
+                .collect(Collectors.toSet());
     }
 
-    public List<FotoProduto> getImagens() {
-        return imagens;
+    public <T> Set<T> mapeiaImagens(Function<FotoProduto, T> funcaoMapeadora) {
+        return this.imagens.stream()
+                .map(funcaoMapeadora)
+                .collect(Collectors.toSet());
+    }
+
+    public <T extends Comparable<T>> SortedSet<T> mapeiaPerguntas(Function<Pergunta, T> funcaoMapeadora) {
+        return this.perguntas.stream()
+                .map(funcaoMapeadora)
+                .collect(Collectors.toCollection(TreeSet::new));
+    }
+
+    public <T> Set<T> mapeiaOpinioes(Function<Opiniao, T> funcaoMapeadora) {
+
+        return this.opinioes.stream()
+                .map(funcaoMapeadora)
+                .collect(Collectors.toSet());
     }
 }

@@ -1,4 +1,4 @@
-package com.zup.william.desafiomercadolivre.desafiomercadolivre.retornoParaFront;
+package com.zup.william.desafiomercadolivre.desafiomercadolivre.detalhesProduto;
 
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastraOpiniao.Opiniao;
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastraOpiniao.OpiniaoENUM;

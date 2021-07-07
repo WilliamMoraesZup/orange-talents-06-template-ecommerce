@@ -1,8 +1,6 @@
-package com.zup.william.desafiomercadolivre.desafiomercadolivre.retornoParaFront;
+package com.zup.william.desafiomercadolivre.desafiomercadolivre.detalhesProduto;
 
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroProduto.Produto;
 import io.jsonwebtoken.lang.Assert;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +22,8 @@ public class FrontController {
         Produto produto = manager.find(Produto.class, id);
         Assert.notNull(produto, "O produto não foi encontrado no banco de dados");
 
-        ProdutoFrontRequest produtoProFront = new ProdutoFrontRequest(produto, manager);
-        System.out.println(produtoProFront);
+        DetalhesProdutoRequest produtoProFront = new DetalhesProdutoRequest(produto, manager);
+
         return ResponseEntity.ok(produtoProFront) ;
     }
 }

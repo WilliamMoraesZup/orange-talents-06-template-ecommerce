@@ -1,13 +1,10 @@
-package com.zup.william.desafiomercadolivre.desafiomercadolivre.retornoParaFront;
+package com.zup.william.desafiomercadolivre.desafiomercadolivre.detalhesProduto;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroProduto.Caracteristica;
 
 import javax.validation.constraints.NotBlank;
 
-public class CaracteristicaRequest {
+public class DetalhesCaracteristica {
 
     @NotBlank
     private String nome;
@@ -22,7 +19,7 @@ public class CaracteristicaRequest {
         return descricao;
     }
 
-    public CaracteristicaRequest(Caracteristica caracteristica) {
+    public DetalhesCaracteristica(Caracteristica caracteristica) {
         this.nome = caracteristica.getNome();
         this.descricao = caracteristica.getDescricao();
     }
