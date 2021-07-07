@@ -10,7 +10,10 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -50,7 +53,6 @@ public class Produto {
     @NotNull
     private Usuario usuarioVendedor;
 
-
     @Size(min = 3)
     @OneToMany(cascade = CascadeType.PERSIST)
     private Set<Caracteristica> caracteristicasList = new HashSet<>();
@@ -64,7 +66,7 @@ public class Produto {
 
 
     @OneToMany(mappedBy = "produto")
-    private List<Opiniao> opinioes = new ArrayList<>();
+    private Set<Opiniao> opinioes = new HashSet<>();
 
 
     public Produto(String nome, BigDecimal valor, int quantidade, String descricao, Categoria categoria, Usuario usuarioVendedor, Set<Caracteristica> caracteristicasList) {
@@ -101,6 +103,10 @@ public class Produto {
         return descricao;
     }
 
+    public OpinoesAuxiliar getOpinioes() {
+        return new OpinoesAuxiliar(this.opinioes);
+    }
+
     public <T> Set<T> mapeiaCaracteristicas(Function<Caracteristica, T> funcaoMapeadora) {
 
         return this.caracteristicasList.stream()
@@ -120,10 +126,5 @@ public class Produto {
                 .collect(Collectors.toCollection(TreeSet::new));
     }
 
-    public <T> Set<T> mapeiaOpinioes(Function<Opiniao, T> funcaoMapeadora) {
 
-        return this.opinioes.stream()
-                .map(funcaoMapeadora)
-                .collect(Collectors.toSet());
-    }
 }
