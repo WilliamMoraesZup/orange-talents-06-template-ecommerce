@@ -5,6 +5,8 @@ import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastraPergunta.
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroCategoria.Categoria;
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroFotoProduto.FotoProduto;
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroUsuario.Usuario;
+import com.zup.william.desafiomercadolivre.desafiomercadolivre.finalizaCompra.CompraForm;
+import io.jsonwebtoken.lang.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -34,7 +36,7 @@ public class Produto {
     private BigDecimal valor;
 
     @NotNull
-    @Positive
+    // @Positive
     @Min(0)
     private int quantidade;
 
@@ -126,5 +128,14 @@ public class Produto {
                 .collect(Collectors.toCollection(TreeSet::new));
     }
 
+    public int abateEstoque(CompraForm compraForm) {
+        Assert.isTrue(this.quantidade > 0, "Produto não possui unidades em estoque");
+        Assert.isTrue(compraForm.getQuantidade() <= this.quantidade, "O produto não possui quantidade suficiente");
+
+        return this
+                .quantidade -= compraForm.getQuantidade();
+    }
 
 }
+
+

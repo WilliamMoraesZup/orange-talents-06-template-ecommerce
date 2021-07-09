@@ -24,7 +24,7 @@ public class Pergunta implements Comparable<Pergunta> {
 
     @NotNull
     @ManyToOne
-    private Usuario usuario;
+    private Usuario perguntador;
 
     @NotNull
     @ManyToOne
@@ -37,9 +37,9 @@ public class Pergunta implements Comparable<Pergunta> {
     public Pergunta() {
     }
 
-    public Pergunta(String titulo, Usuario usuario, Produto produto) {
+    public Pergunta(String titulo, Usuario perguntador, Produto produto) {
         this.titulo = titulo;
-        this.usuario = usuario;
+        this.perguntador = perguntador;
         this.produto = produto;
     }
 
@@ -65,8 +65,17 @@ public class Pergunta implements Comparable<Pergunta> {
     }
 
     @Override
-    public int compareTo(  Pergunta o) {
+    public int compareTo(Pergunta o) {
         return this
                 .titulo.compareTo(o.titulo);
     }
+
+    public Usuario getPerguntador() {
+        return perguntador;
+    }
+
+    public String getDonoProduto() {
+        return produto.getUsuarioVendedor().getLogin();
+    }
+
 }

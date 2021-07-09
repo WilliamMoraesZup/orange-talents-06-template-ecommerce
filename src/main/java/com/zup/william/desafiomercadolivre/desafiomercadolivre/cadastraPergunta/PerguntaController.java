@@ -1,13 +1,9 @@
 package com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastraPergunta;
 
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.zup.william.desafiomercadolivre.desafiomercadolivre.cadastroProduto.Produto;
-import com.zup.william.desafiomercadolivre.desafiomercadolivre.enviaEmailEvent.NovaPerguntaEvento;
 import com.zup.william.desafiomercadolivre.desafiomercadolivre.seguranca.UsuarioLogado;
 import io.jsonwebtoken.lang.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,28 +17,24 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @RestController
-
 public class PerguntaController {
 
 
     @PersistenceContext
     private EntityManager manager;
+
     @Autowired
-    private ApplicationContext applicationContext;
+    private Emails email;
 
     @PostMapping("/produto/{idProduto}/pergunta")
     @Transactional
-    @JsonCreator
-    public ResponseEntity<?> newClass(@RequestBody @Valid PerguntaForm form, @PathVariable Long idProduto, @AuthenticationPrincipal UsuarioLogado usuarioLogado) {
+    public ResponseEntity<?> novaPergunta(@RequestBody @Valid PerguntaForm form, @PathVariable Long idProduto, @AuthenticationPrincipal UsuarioLogado usuarioLogado) {
 
         Pergunta pergunta = form.toModel(manager, usuarioLogado.getIdUsuarioLogado(manager), idProduto);
-
-        Produto produto = manager.find(Produto.class, idProduto);
-        applicationContext.publishEvent(new NovaPerguntaEvento(this, pergunta, produto.getUsuarioVendedor()));
-
         Assert.notNull(pergunta, "Houve algum erro ao criar a pergunta");
-        manager.persist(pergunta);
 
+        manager.persist(pergunta);
+        email.novaPergunta(pergunta);
 
         return ResponseEntity.ok().build();
     }

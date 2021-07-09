@@ -24,9 +24,7 @@ public class CategoriaController {
     @PostMapping
     @Transactional
     public ResponseEntity<?> novaCategoria(@RequestBody @Valid CategoriaForm categoriaForm
-    ) {
-
-        Categoria categoria = categoriaForm.toModel(manager);
+    ) {  Categoria categoria = categoriaForm.toModel(manager);
 
         manager.persist(categoria);
 
