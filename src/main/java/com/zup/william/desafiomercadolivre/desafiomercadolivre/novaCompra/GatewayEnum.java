@@ -1,4 +1,4 @@
-package com.zup.william.desafiomercadolivre.desafiomercadolivre.finalizaCompra;
+package com.zup.william.desafiomercadolivre.desafiomercadolivre.novaCompra;
 
 public enum GatewayEnum {
     PAGSEGURO(new GatewayPagamentoPAGSEGURO()),

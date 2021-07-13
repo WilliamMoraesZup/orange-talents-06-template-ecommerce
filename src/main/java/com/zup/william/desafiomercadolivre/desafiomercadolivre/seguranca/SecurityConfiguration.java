@@ -52,6 +52,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
                 .antMatchers(HttpMethod.POST, "/usuario").permitAll()
                 .antMatchers(HttpMethod.GET, "/categoria").permitAll().antMatchers(HttpMethod.GET, "/produto/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/notas-fiscais/**").permitAll()
+                .antMatchers("/ranking-vendedores/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .cors()
